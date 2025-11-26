@@ -38,10 +38,10 @@ public class TimeSpan {
     }
 
     void addTimeSpan(TimeSpan timespan) {
-        if (span == null) {
+        if (timespan == null) {
             return;
         }
-        add(span.getHours(), span.getMinutes());
+        add(timespan.getHours(), timespan.getMinutes());
     }
 
     double getTotalHours() {
