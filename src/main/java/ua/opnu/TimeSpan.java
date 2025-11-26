@@ -6,12 +6,15 @@ public class TimeSpan {
     private int minutes;
 
     TimeSpan(int hours, int minutes) {
-        if (hours < 0 || minutes < 0 || minutes > 59) {
-            throw new IllegalArgumentException();
+        if (hours < 0 || minutes < 0) {
+            this.hours = 0;
+            this.minutes = 0;
+            return;
         }
-        this.hours = hours;
-        this.minutes = minutes;
+            this.hours = hours + minutes / 60;
+        this.minutes = minutes % 60;
     }
+    
 
     int getHours() {
         return hours;
@@ -22,10 +25,9 @@ public class TimeSpan {
     }
 
     void add(int hours, int minutes) {
-        if (hours < 0 || minutes < 0 || minutes > 59) {
-            throw new IllegalArgumentException();
+        if (hours < 0 || minutes < 0) {
+            return;
         }
-
         this.hours += hours;
         this.minutes += minutes;
 
@@ -36,7 +38,10 @@ public class TimeSpan {
     }
 
     void addTimeSpan(TimeSpan timespan) {
-        add(timespan.getHours(), timespan.getMinutes());
+        if (span == null) {
+            return;
+        }
+        add(span.getHours(), span.getMinutes());
     }
 
     double getTotalHours() {
@@ -48,6 +53,8 @@ public class TimeSpan {
     }
 
     void subtract(TimeSpan span) {
+        if (span == null) return;
+
         int totalThis = getTotalMinutes();
         int totalOther = span.getTotalMinutes();
 
@@ -62,7 +69,7 @@ public class TimeSpan {
 
     void scale(int factor) {
         if (factor <= 0) {
-            throw new IllegalArgumentException();
+            return;
         }
 
         int total = getTotalMinutes() * factor;
