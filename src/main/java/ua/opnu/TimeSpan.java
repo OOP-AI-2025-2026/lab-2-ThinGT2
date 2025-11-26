@@ -59,7 +59,6 @@ public class TimeSpan {
         hours = diff / 60;
         minutes = diff % 60;
     }
-    }
 
     void scale(int factor) {
         if (factor <= 0) {
