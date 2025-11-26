@@ -52,7 +52,7 @@ public class TimeSpan {
         int totalOther = span.getTotalMinutes();
 
         if (totalOther > totalThis) {
-            throw new IllegalArgumentException();
+            return;
         }
 
         int diff = totalThis - totalOther;
