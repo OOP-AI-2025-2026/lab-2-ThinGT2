@@ -6,13 +6,12 @@ public class TimeSpan {
     private int minutes;
 
     TimeSpan(int hours, int minutes) {
-       if (hours < 0 || minutes < 0 || minutes > 59) {
-            this.hours = 0;
-            this.minutes = 0;
-        } else {
-            this.hours = hours;
-            this.minutes = minutes;
+        if (hours < 0 || minutes < 0 || minutes > 59) {
+            throw new IllegalArgumentException();
         }
+        this.hours = hours;
+        this.minutes = minutes;
+    }
 
     int getHours() {
         return hours;
@@ -24,11 +23,16 @@ public class TimeSpan {
 
     void add(int hours, int minutes) {
         if (hours < 0 || minutes < 0 || minutes > 59) {
-            return;
+            throw new IllegalArgumentException();
         }
-        int totalMinutes = getTotalMinutes() + (hours * 60 + minutes);
-        this.hours = totalMinutes / 60;
-        this.minutes = totalMinutes % 60;
+
+        this.hours += hours;
+        this.minutes += minutes;
+
+        if (this.minutes >= 60) {
+            this.hours += this.minutes / 60;
+            this.minutes = this.minutes % 60;
+        }
     }
 
     void addTimeSpan(TimeSpan timespan) {
@@ -46,22 +50,24 @@ public class TimeSpan {
     void subtract(TimeSpan span) {
         int totalThis = getTotalMinutes();
         int totalOther = span.getTotalMinutes();
+
         if (totalOther > totalThis) {
-            return;
+            throw new IllegalArgumentException();
         }
 
-        int result = totalThis - totalOther;
-        this.hours = result / 60;
-        this.minutes = result % 60;
+        int diff = totalThis - totalOther;
+        hours = diff / 60;
+        minutes = diff % 60;
     }
     }
 
     void scale(int factor) {
         if (factor <= 0) {
-            return;
+            throw new IllegalArgumentException();
         }
+
         int total = getTotalMinutes() * factor;
-        this.hours = total / 60;
-        this.minutes = total % 60;
+        hours = total / 60;
+        minutes = total % 60;
     }
 }
