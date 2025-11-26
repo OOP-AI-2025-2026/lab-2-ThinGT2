@@ -3,11 +3,13 @@ package ua.opnu;
 public class BankAccount {
     String name;
     double balance;
-    double transactionFee;
+    double transactionFee = 0;
+    
 
     void deposit(double amount) {
-        // TODO: modify method body
-        balance = balance + amount;
+        if (amount > 0) {
+            balance += amount;
+        }
     }
 
     double getBalance() {
@@ -15,13 +17,19 @@ public class BankAccount {
     }
 
     boolean withdraw(double amount) {
-        // TODO: modify method body
-        balance = balance - amount;
-        return true;
+        if (amount > 0 && balance >= amount + transactionFee) {
+            balance -= (amount + transactionFee);
+            return true;
+        }
+        return false;
     }
 
     boolean transfer(BankAccount receiver, double amount) {
-        // TODO: modify method body
+       if (receiver != null && amount > 0 && balance >= amount + transactionFee) {
+            balance -= (amount + transactionFee);
+            receiver.balance += amount;
+            return true;
+        }
         return false;
     }
 }
